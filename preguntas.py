@@ -166,6 +166,11 @@ def pregunta_10():
     3   D                  1:2:3:5:5:7
     4   E  1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
+    a = tbl0
+    b = a.groupby('_c1').agg({'_c2': lambda x: sorted(list(x))})
+    for _, i in b.iterrows():
+        i['_c2'] = ":".join([str(int) for int in i['_c2']])
+    return b
 
 def pregunta_11():
     """
@@ -183,8 +188,12 @@ def pregunta_11():
     38   38      d,e
     39   39    a,d,f
     """
-    return
-
+    a = tbl1
+    b = a.groupby('_c0').agg({'_c4': lambda x: sorted(list(x))})
+    for _, i in b.iterrows():
+        i['_c4'] = ",".join([str(int) for int in i['_c4']])
+    b.insert(0, '_c0', range(0, 40))
+    return b
 
 def pregunta_12():
     """
@@ -201,8 +210,13 @@ def pregunta_12():
     38   38                    eee:0,fff:9,iii:2
     39   39                    ggg:3,hhh:8,jjj:5
     """
-    return
-
+    a = tbl2
+    a['_c5'] = a['_c5a'] + ':' + (a['_c5b'].astype(str))
+    b = a.groupby('_c0').agg({'_c5': lambda x: sorted(x)})
+    for _, i in b.iterrows():
+        i['_c5'] = ",".join([str(int) for int in i['_c5']])
+    b.insert(0, '_c0', range(0, 40))
+    return b
 
 def pregunta_13():
     """
@@ -218,4 +232,11 @@ def pregunta_13():
     E    275
     Name: _c5b, dtype: int64
     """
-    return
+    t = pd.merge(
+        tbl0,
+        tbl2,
+        how="outer",
+    )
+    return t.groupby('_c1')['_c5b'].sum()
+
+
