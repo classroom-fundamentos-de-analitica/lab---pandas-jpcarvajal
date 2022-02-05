@@ -22,8 +22,7 @@ def pregunta_01():
     40
 
     """
-    return
-
+    return tbl0.shape[0] 
 
 def pregunta_02():
     """
@@ -33,7 +32,7 @@ def pregunta_02():
     4
 
     """
-    return
+    return tbl0.shape[1] 
 
 
 def pregunta_03():
@@ -50,7 +49,7 @@ def pregunta_03():
     Name: _c1, dtype: int64
 
     """
-    return
+    return tbl0.groupby('_c1').size()
 
 
 def pregunta_04():
@@ -65,7 +64,7 @@ def pregunta_04():
     E    4.785714
     Name: _c2, dtype: float64
     """
-    return
+    return tbl0.groupby('_c1')['_c2'].mean()
 
 
 def pregunta_05():
@@ -82,7 +81,7 @@ def pregunta_05():
     E    9
     Name: _c2, dtype: int64
     """
-    return
+    return tbl0.groupby('_c1')['_c2'].max()
 
 
 def pregunta_06():
@@ -94,7 +93,8 @@ def pregunta_06():
     ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 
     """
-    return
+    return list(pd.Series(tbl1['_c4'].unique()).str.upper().sort_values())
+
 
 
 def pregunta_07():
@@ -110,7 +110,7 @@ def pregunta_07():
     E    67
     Name: _c2, dtype: int64
     """
-    return
+    return tbl0.groupby('_c1')['_c2'].sum()
 
 
 def pregunta_08():
@@ -128,7 +128,9 @@ def pregunta_08():
     39   39   E    5  1998-01-26    44
 
     """
-    return
+    t = tbl0.copy()
+    t["suma"] = t._c0 + t._c2
+    return t
 
 
 def pregunta_09():
@@ -146,8 +148,9 @@ def pregunta_09():
     39   39   E    5  1998-01-26  1998
 
     """
-    return
-
+    t = tbl0.copy()
+    t["year"] = t["_c3"].str[:4]
+    return t
 
 def pregunta_10():
     """
@@ -163,7 +166,18 @@ def pregunta_10():
     3   D                  1:2:3:5:5:7
     4   E  1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
-    return
+    a = tbl0.copy()
+    a['nam'] = ["_c0","_c1"] * 20
+
+    a = a.pivot(
+        index = "_c1",
+        columns = "nam",
+        values = "_c0"
+    )
+
+    return a
+
+print(pregunta_10())
 
 
 def pregunta_11():
