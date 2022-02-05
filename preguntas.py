@@ -166,19 +166,6 @@ def pregunta_10():
     3   D                  1:2:3:5:5:7
     4   E  1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
-    a = tbl0.copy()
-    a['nam'] = ["_c0","_c1"] * 20
-
-    a = a.pivot(
-        index = "_c1",
-        columns = "nam",
-        values = "_c0"
-    )
-
-    return a
-
-print(pregunta_10())
-
 
 def pregunta_11():
     """
